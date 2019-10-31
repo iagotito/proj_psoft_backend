@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>psoft.proj.backend</groupId>
-	<artifactId>ajude</artifactId>
+	<artifactId>proj_psoft_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ajude</name>
+	<name>proj_psoft_backend</name>
 	<description>AJuDE: a crowdfunding platform for 2019.2 course of Software Project.</description>
 
 	<properties>

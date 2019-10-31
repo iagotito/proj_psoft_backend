@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AjudeApplication {
+public class ProjPsoftBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AjudeApplication.class, args);
+		SpringApplication.run(ProjPsoftBackendApplication.class, args);
 	}
 
 }
