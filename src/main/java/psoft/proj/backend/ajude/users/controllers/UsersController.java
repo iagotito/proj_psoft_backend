@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.proj.backend.ajude.users.entities.User;
+import psoft.proj.backend.ajude.users.services.JwtService;
 import psoft.proj.backend.ajude.users.services.UsersService;
 
+import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +17,12 @@ import java.util.Optional;
 public class UsersController {
 
     private UsersService usersService;
+    private JwtService jwtService;
 
-    public UsersController (UsersService usersService) {
+    public UsersController (UsersService usersService, JwtService jwtService) {
         super ();
         this.usersService = usersService;
+        this.jwtService = jwtService;
     }
 
     @CrossOrigin
@@ -33,7 +37,7 @@ public class UsersController {
 
     @CrossOrigin
     @GetMapping("")
-    public ResponseEntity<List<User>> getUsers () {
+    public ResponseEntity<List<User>> getUsers (@RequestHeader("Authorization") String header) {
         return new ResponseEntity<>(usersService.getUsers(), HttpStatus.OK);
     }
 
