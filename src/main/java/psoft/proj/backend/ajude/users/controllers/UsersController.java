@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/users")
 public class UsersController {
 
     private UsersService usersService;
@@ -20,8 +21,9 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<User> postUser (@RequestBody User user) throws ServerException {
+    @CrossOrigin
+    @PostMapping("")
+    public ResponseEntity<User> postUser (@RequestBody User user) {
         try {
             return new ResponseEntity<>(usersService.postUser(user), HttpStatus.CREATED);
         } catch (ServerException e) {
@@ -29,16 +31,25 @@ public class UsersController {
         }
     }
 
-    @GetMapping("/users")
+    @CrossOrigin
+    @GetMapping("")
     public ResponseEntity<List<User>> getUsers () {
         return new ResponseEntity<>(usersService.getUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{email}")
+    @CrossOrigin
+    @GetMapping("/{email}")
     public ResponseEntity<User> getUser (@PathVariable String email) {
         Optional<User> user = usersService.getUser(email);
         if (user.isPresent())
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("")
+    public ResponseEntity deleteUsers () {
+        usersService.deleteUsers();
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

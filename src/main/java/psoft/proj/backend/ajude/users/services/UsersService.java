@@ -32,4 +32,7 @@ public class UsersService {
         return usersDAO.findById(email);
     }
 
+    public void deleteUsers() {
+        usersDAO.deleteAll();
+    }
 }
