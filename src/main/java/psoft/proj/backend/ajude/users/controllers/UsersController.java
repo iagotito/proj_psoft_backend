@@ -37,8 +37,22 @@ public class UsersController {
 
     @CrossOrigin
     @GetMapping("")
-    public ResponseEntity<List<User>> getUsers (@RequestHeader("Authorization") String header) {
+    public ResponseEntity<List<User>> getUsers () {
         return new ResponseEntity<>(usersService.getUsers(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    //todo: achar um nome melhor pra essa rota
+    @GetMapping("/auth")
+    public ResponseEntity<User> getUserByHeader (@RequestHeader("Authorization") String header) {
+        try {
+            return new ResponseEntity<>(usersService.getUserByHeader(header), HttpStatus.OK);
+        } catch (ServletException e) {
+            if (e.toString().equals("Token inexistente ou mal formatado!"))
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @CrossOrigin

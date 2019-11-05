@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 
+import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class UsersService {
 
     private UsersRepository usersDAO;
+    private JwtService jwtService;
 
-    public UsersService(UsersRepository<User, String> usersDAO) {
+    public UsersService(UsersRepository<User, String> usersDAO, JwtService jwtService) {
         super();
         this.usersDAO = usersDAO;
+        this.jwtService = jwtService;
     }
 
     public User postUser (User user) throws ServerException {
@@ -34,5 +37,9 @@ public class UsersService {
 
     public void deleteUsers() {
         usersDAO.deleteAll();
+    }
+
+    public User getUserByHeader(String header) throws ServletException {
+        return (User) usersDAO.findById(jwtService.getTokenSubject(header)).get();
     }
 }

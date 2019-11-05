@@ -1,5 +1,7 @@
 package psoft.proj.backend.ajude.users.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.services.JwtService;
@@ -23,25 +25,25 @@ public class LoginController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public LoginResponse authenticate(@RequestBody User user) throws ServletException {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody User user) throws ServletException {
 
         // Recupera o usuario
         Optional<User> authUsuario = usersService.getUser(user.getEmail());
 
         // verificacoes
         if (authUsuario.isEmpty())
-            throw new ServletException("Usuario nao encontrado!");
+            return new ResponseEntity("Usuário não encontrado.", HttpStatus.NOT_FOUND);
         if (!authUsuario.get().getPassword().equals(user.getPassword()))
-            throw new ServletException("Senha invalida!");
+            return new ResponseEntity("Senha inválida.", HttpStatus.FORBIDDEN);
 
         String token = jwtService.generateToken(authUsuario.get().getEmail());
-        return new LoginResponse(token);
+        return new ResponseEntity(new LoginResponse(token), HttpStatus.OK);
     }
 
     private class LoginResponse {
         public String token;
 
-        public LoginResponse(String token) {
+        public LoginResponse (String token) {
             this.token = token;
         }
     }

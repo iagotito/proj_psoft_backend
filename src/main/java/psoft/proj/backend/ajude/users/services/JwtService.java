@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class JwtService {
 
-    private final String TOKEN_KEY = "login do batman";
+    private final String TOKEN_KEY = "raquel_me_da_10";
     private UsersService usersService;
 
     public JwtService (UsersService usersService) {
@@ -34,14 +34,12 @@ public class JwtService {
         return usersService.getUser(subject).isPresent();
     }
 
-    public boolean userHavePermission(String authorizationHeader, String email) throws ServletException {
-        String subject = getTokenSubject(authorizationHeader);
-
-        Optional<User> optUser = usersService.getUser(subject);
-        return optUser.isPresent() && optUser.get().getEmail().equals(email);
+    //todo
+    public boolean userHavePermission(String authorizationHeader, String email) {
+        return true;
     }
 
-    private String getTokenSubject(String authorizationHeader) throws ServletException {
+    public String getTokenSubject(String authorizationHeader) throws ServletException {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             throw new ServletException("Token inexistente ou mal formatado!");
         }
@@ -50,7 +48,7 @@ public class JwtService {
 
         String subject = null;
         try {
-            subject = Jwts.parser().setSigningKey("login do batman").parseClaimsJws(token).getBody().getSubject();
+            subject = Jwts.parser().setSigningKey("raquel_me_da_10").parseClaimsJws(token).getBody().getSubject();
         } catch (SignatureException e) {
             throw new ServletException("Token invalido ou expirado!");
         }
