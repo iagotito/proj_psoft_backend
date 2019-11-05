@@ -46,7 +46,7 @@ public class UsersController {
     @GetMapping("/auth")
     public ResponseEntity<User> getUserByHeader (@RequestHeader("Authorization") String header) {
         try {
-            return new ResponseEntity<>(usersService.getUserByHeader(header), HttpStatus.OK);
+            return new ResponseEntity<>(jwtService.getUserByHeader(header), HttpStatus.OK);
         } catch (ServletException e) {
             if (e.toString().equals("Token inexistente ou mal formatado!"))
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

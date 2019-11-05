@@ -13,12 +13,10 @@ import java.util.Optional;
 public class UsersService {
 
     private UsersRepository usersDAO;
-    private JwtService jwtService;
 
-    public UsersService(UsersRepository<User, String> usersDAO, JwtService jwtService) {
+    public UsersService(UsersRepository<User, String> usersDAO) {
         super();
         this.usersDAO = usersDAO;
-        this.jwtService = jwtService;
     }
 
     public User postUser (User user) throws ServerException {
@@ -37,9 +35,5 @@ public class UsersService {
 
     public void deleteUsers() {
         usersDAO.deleteAll();
-    }
-
-    public User getUserByHeader(String header) throws ServletException {
-        return (User) usersDAO.findById(jwtService.getTokenSubject(header)).get();
     }
 }
