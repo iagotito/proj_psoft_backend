@@ -9,7 +9,6 @@ import psoft.proj.backend.ajude.users.filters.TokenFilter;
 
 import javax.servlet.ServletException;
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class JwtService {
@@ -25,7 +24,7 @@ public class JwtService {
     public String generateToken(String email) {
         return Jwts.builder().setSubject(email)
                 .signWith(SignatureAlgorithm.HS512, TOKEN_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000)).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)).compact();
     }
 
     public boolean userExists(String authorizationHeader) throws ServletException {
@@ -58,6 +57,5 @@ public class JwtService {
     public User getUserByHeader(String header) throws ServletException {
         return usersService.getUser(getTokenSubject(header)).get();
     }
-
 }
 

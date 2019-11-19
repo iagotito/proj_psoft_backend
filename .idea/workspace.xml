@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1TkRo4HHhwVm7Bu14ZqmmrQBnqh" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ProjPsoftBakckendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="proj_psoft_bakckend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="psoft.proj.backend.ajude.ProjPsoftBakckendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+</project>

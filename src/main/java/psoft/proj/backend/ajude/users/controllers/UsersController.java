@@ -3,6 +3,7 @@ package psoft.proj.backend.ajude.users.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.services.JwtService;
 import psoft.proj.backend.ajude.users.services.UsersService;
@@ -10,7 +11,6 @@ import psoft.proj.backend.ajude.users.services.UsersService;
 import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -18,11 +18,13 @@ public class UsersController {
 
     private UsersService usersService;
     private JwtService jwtService;
+    private CampaignsService campaignsService;
 
-    public UsersController (UsersService usersService, JwtService jwtService) {
+    public UsersController (UsersService usersService, JwtService jwtService, CampaignsService campaignsService) {
         super ();
         this.usersService = usersService;
         this.jwtService = jwtService;
+        this.campaignsService = campaignsService;
     }
 
     @CrossOrigin
@@ -56,12 +58,13 @@ public class UsersController {
     }
 
     @CrossOrigin
-    @GetMapping("/{email}")
-    public ResponseEntity<User> getUser (@PathVariable String email) {
-        Optional<User> user = usersService.getUser(email);
-        if (user.isPresent())
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/{num}")
+    public ResponseEntity<User> getUser (@PathVariable int num) {
+        try {
+            return new ResponseEntity<>(usersService.getUserByNum(num), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin

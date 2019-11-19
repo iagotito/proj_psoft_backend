@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.0.RELEASE</version>
+		<version>2.2.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>psoft.proj.backend</groupId>
-	<artifactId>proj_psoft_backend</artifactId>
+	<groupId>psoft.proj.backend.ajude</groupId>
+	<artifactId>proj_psoft_bakckend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>proj_psoft_backend</name>
-	<description>AJuDE: a crowdfunding platform for 2019.2 course of Software Project.</description>
+	<name>proj_psoft_bakckend</name>
+	<description>Psoft project</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -29,13 +29,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
@@ -45,11 +41,6 @@
 			<version>0.9.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
