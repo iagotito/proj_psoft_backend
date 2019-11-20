@@ -37,7 +37,7 @@ public class CampaignsService {
     public Campaign getCampaign(String url) throws ServletException {
         if (campaignDAO.findById(url).isPresent())
             return (Campaign) campaignDAO.findById(url).get();
-        throw new ServletException("Campaign not found.");
+        throw new ServletException("Campaign nor found.");
     }
 
     public List<Campaign> searchCampaigns(String substring) {
