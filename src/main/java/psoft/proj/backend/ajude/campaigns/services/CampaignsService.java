@@ -25,4 +25,24 @@ public class CampaignsService {
     public List<Campaign> getCampaigns() {
         return campaignDAO.findAll();
     }
+<<<<<<< HEAD
+
+    public Boolean contaisUrl(String url) {
+        return campaignDAO.findById(url).isPresent();
+    }
+
+    public Optional<Campaign> getCampaign(String url) {
+        return campaignDAO.findById(url);
+    }
+
+    public List<Campaign> searchCampaigns(String substring) {
+        List<Campaign> campaigns = new LinkedList<>();
+        for (Object o : campaignDAO.findAll()) {
+            if (((Campaign) o).getName().contains(substring))
+                campaigns.add((Campaign) o);
+        }
+        return campaigns;
+    }
+=======
+>>>>>>> 32ae6b885bf7a3cc124ce899fd481873858e1503
 }

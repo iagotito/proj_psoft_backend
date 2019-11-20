@@ -42,4 +42,26 @@ public class CampaignController {
     public ResponseEntity<List<Campaign>> getCampaigns () {
         return new ResponseEntity<>(campaignsService.getCampaigns(), HttpStatus.OK);
     }
+<<<<<<< HEAD
+
+    @GetMapping("/{url}")
+    public ResponseEntity<Campaign> getCampaign (@PathVariable String url) {
+        Optional<Campaign> campaign = campaignsService.getCampaign(url);
+        if (campaign.isPresent())
+            return new ResponseEntity<>(campaign.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/contains-url/{url}")
+    public ResponseEntity<Boolean> containsUrl (@PathVariable String url) {
+        return new ResponseEntity<>(campaignsService.contaisUrl(url), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{substring}")
+    public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) {
+        return new ResponseEntity<>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
+    }
+
+=======
+>>>>>>> 32ae6b885bf7a3cc124ce899fd481873858e1503
 }
