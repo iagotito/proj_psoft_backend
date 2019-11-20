@@ -3,13 +3,13 @@ package psoft.proj.backend.ajude.campaigns.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/campaigns")
@@ -24,44 +24,55 @@ public class CampaignController {
         this.jwtService = jwtService;
     }
 
+    @CrossOrigin
     @PostMapping("/create")
-    public ResponseEntity<Campaign> createCampaign (@RequestHeader("Authorization") String header,
+    public ResponseEntity<?> createCampaign (@RequestHeader("Authorization") String header,
                                                     @RequestBody Campaign campaign) {
-        String user;
         try {
-            user = jwtService.getTokenSubject(header);
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(campaignsService.createCampaign(header, campaign),
+                    HttpStatus.CREATED);
         } catch (ServletException e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.FORBIDDEN);
         }
-
-        return new ResponseEntity<>(campaignsService.createCampaign(user, campaign),
-                HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @CrossOrigin
+    @GetMapping("")
     public ResponseEntity<List<Campaign>> getCampaigns () {
         return new ResponseEntity<>(campaignsService.getCampaigns(), HttpStatus.OK);
     }
-<<<<<<< HEAD
 
-    @GetMapping("/{url}")
-    public ResponseEntity<Campaign> getCampaign (@PathVariable String url) {
-        Optional<Campaign> campaign = campaignsService.getCampaign(url);
-        if (campaign.isPresent())
-            return new ResponseEntity<>(campaign.get(), HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @CrossOrigin
+    @GetMapping("/top-5")
+    public ResponseEntity<List<Campaign>> getTop5Campaigns () {
+        return new ResponseEntity<>(campaignsService.getTop5Campaigns(), HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @GetMapping("/{url}")
+    public ResponseEntity<?> getCampaign (@PathVariable String url) {
+        try {
+            return new ResponseEntity<>(campaignsService.getCampaign(url),
+                    HttpStatus.OK);
+        } catch (ServletException e) {
+            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/contains-url/{url}")
     public ResponseEntity<Boolean> containsUrl (@PathVariable String url) {
         return new ResponseEntity<>(campaignsService.contaisUrl(url), HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping("/search/{substring}")
     public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) {
         return new ResponseEntity<>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
     }
-
-=======
->>>>>>> 32ae6b885bf7a3cc124ce899fd481873858e1503
 }

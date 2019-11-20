@@ -25,24 +25,26 @@ public class LoginController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody User user) throws ServletException {
+    public ResponseEntity<?> authenticate(@RequestBody User user) {
 
-        // Recupera o usuario
-        Optional<User> authUsuario = usersService.getUser(user.getEmail());
+        try {
+            // Recupera o usuario
+            User authUser = usersService.getUser(user.getEmail());
 
-        // verificacoes
-        if (authUsuario.isEmpty())
-            return new ResponseEntity("Usuário não encontrado.", HttpStatus.NOT_FOUND);
-        if (!authUsuario.get().getPassword().equals(user.getPassword()))
-            return new ResponseEntity("Senha inválida.", HttpStatus.FORBIDDEN);
+            if (!authUser.getPassword().equals(user.getPassword()))
+                return new ResponseEntity("{\"message\":\"Wrong password.\"}", HttpStatus.FORBIDDEN);
 
-        String token = jwtService.generateToken(authUsuario.get().getEmail());
-        return new ResponseEntity(new LoginResponse(token), HttpStatus.OK);
+            String token = jwtService.generateToken(authUser.getEmail());
+            return new ResponseEntity(new LoginResponse(token), HttpStatus.OK);
+        } catch (ServletException e) {
+            // Se tiver erro, é porque o usuário não existe
+            return new ResponseEntity("{\"message\":\"" + e.getMessage() + "\"}",
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     private class LoginResponse {
         public String token;
-
         public LoginResponse (String token) {
             this.token = token;
         }

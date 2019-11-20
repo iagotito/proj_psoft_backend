@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.stereotype.Service;
+import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.filters.TokenFilter;
 
@@ -29,12 +30,12 @@ public class JwtService {
 
     public boolean userExists(String authorizationHeader) throws ServletException {
         String subject = getTokenSubject(authorizationHeader);
-
-        return usersService.getUser(subject).isPresent();
+        return usersService.userExists(subject);
     }
 
-    //todo
-    public boolean userHavePermission(String authorizationHeader, String email) {
+    //TODO
+    // Check if the user is owner of the campaign.
+    public boolean userHavePermissionEditCampaign(String email, Campaign campaign) {
         return true;
     }
 
@@ -55,7 +56,8 @@ public class JwtService {
     }
 
     public User getUserByHeader(String header) throws ServletException {
-        return usersService.getUser(getTokenSubject(header)).get();
+        return usersService.getUser(getTokenSubject(header));
     }
+
 }
 

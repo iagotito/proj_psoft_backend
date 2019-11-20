@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 
+import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
 import java.util.Optional;
@@ -12,40 +13,31 @@ import java.util.Optional;
 public class UsersService {
 
     private UsersRepository usersDAO;
-    private int id_num;
 
     public UsersService(UsersRepository<User, String> usersDAO) {
         super();
         this.usersDAO = usersDAO;
-        id_num = 0;
     }
 
-    public User postUser (User user) throws ServerException {
-        user.setId_num(id_num);
-        id_num++;
-        if (!usersDAO.findById(user.getEmail()).isPresent())
-            return (User) usersDAO.save(user);
-        throw new ServerException("E-mail already registered.");
+    public User createUser (User user) throws ServerException {
+        if (usersDAO.findById(user.getEmail()).isPresent())
+            throw new ServerException("E-mail already registered.");
+
+        return (User) usersDAO.save(user);
     }
 
     public List<User> getUsers() {
         return usersDAO.findAll();
     }
 
-    public Optional<User> getUser (String email) {
-        return usersDAO.findById(email);
+    public User getUser (String email) throws ServletException {
+        if (usersDAO.findById(email).isEmpty())
+            throw new ServletException("User not found.");
+
+        return (User) usersDAO.findById(email).get();
     }
 
-    public User getUserByNum (int num) throws Exception {
-        List<User> users = usersDAO.findAll();
-        for (User u : users) {
-            if (u.getId_num() == num)
-                return u;
-        }
-        throw new Exception("User not found.");
-    }
-
-    public void deleteUsers() {
-        usersDAO.deleteAll();
+    public boolean userExists(String subject) {
+        return usersDAO.findById(subject).isPresent();
     }
 }

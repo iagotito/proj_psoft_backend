@@ -3,6 +3,7 @@ package psoft.proj.backend.ajude.users.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
 import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.services.JwtService;
@@ -29,11 +30,12 @@ public class UsersController {
 
     @CrossOrigin
     @PostMapping("")
-    public ResponseEntity<User> postUser (@RequestBody User user) {
+    public ResponseEntity<?> createUser (@RequestBody User user) {
         try {
-            return new ResponseEntity<>(usersService.postUser(user), HttpStatus.CREATED);
+            return new ResponseEntity<>(usersService.createUser(user), HttpStatus.CREATED);
         } catch (ServerException e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.FORBIDDEN);
         }
     }
 
@@ -46,31 +48,27 @@ public class UsersController {
     @CrossOrigin
     //todo: achar um nome melhor pra essa rota
     @GetMapping("/auth")
-    public ResponseEntity<User> getUserByHeader (@RequestHeader("Authorization") String header) {
+    public ResponseEntity<?> getUserByHeader (@RequestHeader("Authorization") String header) {
         try {
             return new ResponseEntity<>(jwtService.getUserByHeader(header), HttpStatus.OK);
         } catch (ServletException e) {
             if (e.toString().equals("Token inexistente ou mal formatado!"))
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.NOT_FOUND);
             else
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin
-    @GetMapping("/{num}")
-    public ResponseEntity<User> getUser (@PathVariable int num) {
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getUser (@PathVariable String email) {
         try {
-            return new ResponseEntity<>(usersService.getUserByNum(num), HttpStatus.OK);
+            return new ResponseEntity<>(usersService.getUser(email), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
         }
-    }
-
-    @CrossOrigin
-    @DeleteMapping("")
-    public ResponseEntity deleteUsers () {
-        usersService.deleteUsers();
-        return new ResponseEntity(HttpStatus.OK);
     }
 }

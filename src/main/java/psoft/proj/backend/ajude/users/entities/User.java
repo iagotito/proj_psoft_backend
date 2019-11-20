@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Data
 public class User{
-    private Integer id_num;
     @Id
     private String email;
     private String fname;
@@ -23,7 +22,7 @@ public class User{
 
     private User () { super(); }
 
-    private User (int id_num, String email, String fname, String lname, String password, String credit_card) {
+    private User (String email, String fname, String lname, String password, String credit_card) {
         super();
         this.email = email;
         this.fname = fname;
