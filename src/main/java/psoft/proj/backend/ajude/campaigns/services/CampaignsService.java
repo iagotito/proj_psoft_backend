@@ -23,7 +23,26 @@ public class CampaignsService {
     public Campaign createCampaign (String header, Campaign campaign) throws ServletException {
         campaign.setOwner(jwtService.getTokenSubject(header));
         campaign.setStatus("ativa");
+        // Vai ver se a url já existe, se sim, vai aumentando um contador ao fim dela.
+        campaign.setUrl(newUrl(campaign.getUrl()));
         return (Campaign) campaignDAO.save(campaign);
+    }
+
+
+    private String newUrl (String url) {
+        if (!campaignDAO.existsById(url))
+            return url;
+        else return newUrlWithNumber(url + "-1", 2);
+    }
+
+    private String newUrlWithNumber (String url, int num) {
+        if (!campaignDAO.existsById(url))
+            return url;
+        else {
+            int lengthOfNumbers = (url.split("-")[url.split("-").length-1]).length();
+            String urlWithoutNumber = url.substring(0, url.length() - lengthOfNumbers-1);
+            return newUrlWithNumber(urlWithoutNumber + "-" + num, num+1);
+        }
     }
 
     public List<Campaign> getCampaigns() {
