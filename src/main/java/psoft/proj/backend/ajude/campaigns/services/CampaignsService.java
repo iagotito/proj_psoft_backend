@@ -131,14 +131,19 @@ public class CampaignsService {
 
         return p > 0;
     }
+
     public void toLike(String url, String header) throws ServletException {
         String email = jwtService.getTokenSubject(header);
-        Campaign campaign = getCampaign(url);
+        Campaign newCampaign = this.getCampaign(url);
 
-        if(campaign.getLikes().contains(email)){
-            campaign.removeLike(email);
+        if(newCampaign.getLikes().contains(email)){
+            newCampaign.removeLike(email);
         } else {
-            campaign.setLikes(email);
+            newCampaign.setLikes(email);
         }
+
+        campaignDAO.delete(this.getCampaign(url));
+        campaignDAO.save(newCampaign);
+
     }
 }

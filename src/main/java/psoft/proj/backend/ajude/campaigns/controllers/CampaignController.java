@@ -75,6 +75,7 @@ public class CampaignController {
     public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) {
         return new ResponseEntity<List<Campaign>>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
     }
+
     @CrossOrigin
     @PostMapping("/{url}/likes")
     public ResponseEntity<?> toLike (@PathVariable String url, @RequestHeader("Authorization") String header){
