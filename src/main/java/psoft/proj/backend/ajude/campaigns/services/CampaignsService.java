@@ -16,13 +16,15 @@ public class CampaignsService {
 
     public CampaignsService (CampaignsRepository campaignsRepository, JwtService jwtService) {
         super ();
-        campaignDAO = campaignsRepository;
+        this.campaignDAO = campaignsRepository;
         this.jwtService = jwtService;
     }
 
     public Campaign createCampaign (String header, Campaign campaign) throws ServletException {
         campaign.setOwner(jwtService.getTokenSubject(header));
         campaign.setStatus("ativa");
+        campaign.instanciationComments();
+        campaign.instanciationLikes();
         // Vai ver se a url já existe, se sim, vai aumentando um contador ao fim dela.
         campaign.setUrl(newUrl(campaign.getUrl()));
         return (Campaign) campaignDAO.save(campaign);
@@ -61,7 +63,7 @@ public class CampaignsService {
 
     public List<Campaign> searchCampaigns(String substring) {
         substring = substring.toLowerCase().replace("-"," ");
-        List<Campaign> campaigns = new LinkedList<>();
+        List<Campaign> campaigns = new LinkedList<Campaign>();
         for (Object o : campaignDAO.findAll()) {
             if (((Campaign) o).getName().toLowerCase().contains(substring))
                 campaigns.add((Campaign) o);
@@ -74,7 +76,7 @@ public class CampaignsService {
         Campaign[] top5 = new Campaign[5];
         for (Campaign c : campaigns)
             addInTop5 (top5, c);
-        List<Campaign> ret = new LinkedList<>();
+        List<Campaign> ret = new LinkedList<Campaign>();
         for (Campaign c : top5) {
             if (c != null)
                 ret.add(c);
@@ -127,5 +129,15 @@ public class CampaignsService {
             p--;
 
         return p > 0;
+    }
+    public void toLike(String url, String header) throws ServletException {
+        String email = jwtService.getTokenSubject(header);
+        Campaign campaign = getCampaign(url);
+
+        if(campaign.getLikes().contains(email)){
+            campaign.removeLike(email);
+        } else {
+            campaign.setLikes(email);
+        }
     }
 }

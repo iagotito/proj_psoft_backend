@@ -1,19 +1,21 @@
 package psoft.proj.backend.ajude.campaigns.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-@Entity
 @Data
+@Document(collection = "Campaign")
 public class Campaign {
     private String owner;
     private String name;
+
     @Id
     private String url;
     private String description;
@@ -21,9 +23,12 @@ public class Campaign {
     private String status;
     private double goal;
     private double donations;
-    @OneToMany(targetEntity = Comment.class, mappedBy = "campaign",
-            cascade = CascadeType.ALL)
+
     private List<Comment> comments;
+
+    @JsonProperty("likes")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    private List<String> likes;
 
     public Campaign() {
         super();
@@ -38,9 +43,11 @@ public class Campaign {
         this.description = description;
         this.deadline = deadline;
         this.goal = goal;
-        donations = 0;
-        comments = new LinkedList();
+        this.donations = 0;
+        this.comments = new LinkedList<>();
+        this.likes = new ArrayList<>();
     }
+
 
     // TODO: usar isso para alterar o status
     public void checkStatus() throws ParseException {
@@ -56,5 +63,93 @@ public class Campaign {
             setStatus("concluída");
         else
             setStatus("vencida");
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public double getGoal() {
+        return goal;
+    }
+
+    public void setGoal(double goal) {
+        this.goal = goal;
+    }
+
+    public double getDonations() {
+        return donations;
+    }
+
+    public void setDonations(double donations) {
+        this.donations = donations;
+    }
+
+    public List<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void instanciationComments(){
+        this.comments = new LinkedList<>();
+    }
+
+    public void instanciationLikes(){
+        this.likes = new ArrayList<>();
+    }
+
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String email) {
+        this.likes.add(email);
+    }
+
+    public void removeLike(String email) {
+        this.likes.remove(email);
     }
 }

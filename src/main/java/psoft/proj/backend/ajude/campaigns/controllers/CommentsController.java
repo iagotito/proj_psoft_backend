@@ -7,6 +7,8 @@ import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
 import psoft.proj.backend.ajude.campaigns.entities.Comment;
 import psoft.proj.backend.ajude.campaigns.services.CommentsService;
 
+import java.util.List;
+
 import javax.servlet.ServletException;
 
 @RestController
@@ -25,10 +27,10 @@ public class CommentsController {
     public ResponseEntity<?> commentCampaign (@RequestHeader("Authorization") String header, @PathVariable String url,
                                                     @RequestBody Comment comment) {
         try {
-            return new ResponseEntity<>(commentsService.addComment(header, url, comment),
+            return new ResponseEntity<Comment>(commentsService.addComment(header, url, comment),
                     HttpStatus.CREATED);
         } catch (ServletException e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
     }
@@ -37,9 +39,9 @@ public class CommentsController {
     @GetMapping("")
     public ResponseEntity<?> getCampaignComments (@PathVariable String url) {
         try {
-            return new ResponseEntity<>(commentsService.getCampaignsComments(url), HttpStatus.OK);
+            return new ResponseEntity<List<Comment>>(commentsService.getCampaignsComments(url), HttpStatus.OK);
         } catch (ServletException e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
     }

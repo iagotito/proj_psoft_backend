@@ -31,7 +31,7 @@ public class UsersService {
     }
 
     public User getUser (String email) throws ServletException {
-        if (usersDAO.findById(email).isEmpty())
+        if (!usersDAO.existsById(email))
             throw new ServletException("User not found.");
 
         return (User) usersDAO.findById(email).get();

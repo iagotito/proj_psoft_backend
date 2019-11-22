@@ -32,9 +32,9 @@ public class UsersController {
     @PostMapping("")
     public ResponseEntity<?> createUser (@RequestBody User user) {
         try {
-            return new ResponseEntity<>(usersService.createUser(user), HttpStatus.CREATED);
+            return new ResponseEntity<User>(usersService.createUser(user), HttpStatus.CREATED);
         } catch (ServerException e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.FORBIDDEN);
         }
     }
@@ -42,7 +42,7 @@ public class UsersController {
     @CrossOrigin
     @GetMapping("")
     public ResponseEntity<List<User>> getUsers () {
-        return new ResponseEntity<>(usersService.getUsers(), HttpStatus.OK);
+        return new ResponseEntity<List<User>>(usersService.getUsers(), HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -50,13 +50,13 @@ public class UsersController {
     @GetMapping("/auth")
     public ResponseEntity<?> getUserByHeader (@RequestHeader("Authorization") String header) {
         try {
-            return new ResponseEntity<>(jwtService.getUserByHeader(header), HttpStatus.OK);
+            return new ResponseEntity<User>(jwtService.getUserByHeader(header), HttpStatus.OK);
         } catch (ServletException e) {
             if (e.toString().equals("Token inexistente ou mal formatado!"))
-                return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.NOT_FOUND);
             else
-                return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.FORBIDDEN);
         }
     }
@@ -65,9 +65,9 @@ public class UsersController {
     @GetMapping("/{email}")
     public ResponseEntity<?> getUser (@PathVariable String email) {
         try {
-            return new ResponseEntity<>(usersService.getUser(email), HttpStatus.OK);
+            return new ResponseEntity<User>(usersService.getUser(email), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
     }

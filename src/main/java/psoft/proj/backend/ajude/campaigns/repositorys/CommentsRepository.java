@@ -1,11 +1,14 @@
 package psoft.proj.backend.ajude.campaigns.repositorys;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import psoft.proj.backend.ajude.campaigns.entities.Comment;
 
 import java.io.Serializable;
 
-@Repository
-public interface CommentsRepository<T, ID extends Serializable> extends JpaRepository<Comment, Integer> {
+@Document("Campaign")
+public interface CommentsRepository<T, ID extends Serializable> extends MongoRepository<Comment, Integer> {
+
 }
+

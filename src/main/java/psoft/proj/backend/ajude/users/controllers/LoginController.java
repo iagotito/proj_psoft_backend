@@ -32,14 +32,24 @@ public class LoginController {
             User authUser = usersService.getUser(user.getEmail());
 
             if (!authUser.getPassword().equals(user.getPassword()))
-                return new ResponseEntity("{\"message\":\"Wrong password.\"}", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("{\"message\":\"Wrong password.\"}", HttpStatus.FORBIDDEN);
 
             String token = jwtService.generateToken(authUser.getEmail());
-            return new ResponseEntity(new LoginResponse(token), HttpStatus.OK);
+            return new ResponseEntity<>(new LoginResponse(token), HttpStatus.OK);
         } catch (ServletException e) {
             // Se tiver erro, é porque o usuário não existe
-            return new ResponseEntity("{\"message\":\"" + e.getMessage() + "\"}",
+            return new ResponseEntity<>("{\"message\":\"" + e.getMessage() + "\"}",
                     HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/valid-token")
+    public ResponseEntity<?> validToken (@RequestHeader("Authorization") String header) {
+        try {
+            return new ResponseEntity<>(jwtService.userExists(header), HttpStatus.OK);
+        } catch (ServletException e) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
 

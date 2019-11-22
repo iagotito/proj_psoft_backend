@@ -30,12 +30,12 @@ public class CampaignController {
                                                     @RequestBody Campaign campaign) {
         try {
             if (!jwtService.userExists(header))
-                return new ResponseEntity<>(new ExceptionResponse("Header does not correspond to any user."),
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
                         HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(campaignsService.createCampaign(header, campaign),
+            return new ResponseEntity<Campaign>(campaignsService.createCampaign(header, campaign),
                     HttpStatus.CREATED);
         } catch (ServletException e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.FORBIDDEN);
         }
     }
@@ -43,23 +43,23 @@ public class CampaignController {
     @CrossOrigin
     @GetMapping("")
     public ResponseEntity<List<Campaign>> getCampaigns () {
-        return new ResponseEntity<>(campaignsService.getCampaigns(), HttpStatus.OK);
+        return new ResponseEntity<List<Campaign>>(campaignsService.getCampaigns(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/top-5")
     public ResponseEntity<List<Campaign>> getTop5Campaigns () {
-        return new ResponseEntity<>(campaignsService.getTop5Campaigns(), HttpStatus.OK);
+        return new ResponseEntity<List<Campaign>>(campaignsService.getTop5Campaigns(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/{url}")
     public ResponseEntity<?> getCampaign (@PathVariable String url) {
         try {
-            return new ResponseEntity<>(campaignsService.getCampaign(url),
+            return new ResponseEntity<Campaign>(campaignsService.getCampaign(url),
                     HttpStatus.OK);
         } catch (ServletException e) {
-            return new ResponseEntity<>(new ExceptionResponse(e.getMessage()),
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
     }
@@ -67,12 +67,27 @@ public class CampaignController {
     @CrossOrigin
     @GetMapping("/contains-url/{url}")
     public ResponseEntity<Boolean> containsUrl (@PathVariable String url) {
-        return new ResponseEntity<>(campaignsService.contaisUrl(url), HttpStatus.OK);
+        return new ResponseEntity<Boolean>(campaignsService.contaisUrl(url), HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/search/{substring}")
     public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) {
-        return new ResponseEntity<>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
+        return new ResponseEntity<List<Campaign>>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
     }
+    @CrossOrigin
+    @PostMapping("/{url}/likes")
+    public ResponseEntity<?> toLike (@PathVariable String url, @RequestHeader("Authorization") String header){
+        try {
+            campaignsService.toLike(url, header);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch(ServletException e) {
+            if(e.getMessage().equals("Campaign not found.")){
+                return new ResponseEntity<>(new ExceptionResponse("Campaign not found."), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(new ExceptionResponse("Token invalido ou expirado!"), HttpStatus.FORBIDDEN);
+            }
+        }
+    }
+
 }

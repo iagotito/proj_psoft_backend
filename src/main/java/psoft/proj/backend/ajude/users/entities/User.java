@@ -1,14 +1,15 @@
 package psoft.proj.backend.ajude.users.entities;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 
-import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@Entity
 @Data
+@Document(collection = "User")
 public class User{
     @Id
     private String email;
@@ -16,9 +17,57 @@ public class User{
     private String lname;
     private String password;
     private String credit_card;
-    @OneToMany(targetEntity = Campaign.class, mappedBy = "owner",
-            cascade = CascadeType.ALL)
+    // TODO (verificar necessidade) @OneToMany(targetEntity = Campaign.class, mappedBy = "owner",
+    //        cascade = CascadeType.ALL)
     private List campaigns;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCredit_card() {
+        return credit_card;
+    }
+
+    public void setCredit_card(String credit_card) {
+        this.credit_card = credit_card;
+    }
+
+    public List getCampaigns() {
+        return campaigns;
+    }
+
+    public void setCampaigns(List campaigns) {
+        this.campaigns = campaigns;
+    }
 
     private User () { super(); }
 
@@ -29,6 +78,6 @@ public class User{
         this.lname = lname;
         this.password = password;
         this.credit_card = credit_card;
-        campaigns = new LinkedList<>();
+        campaigns = new LinkedList<Campaign>();
     }
 }
