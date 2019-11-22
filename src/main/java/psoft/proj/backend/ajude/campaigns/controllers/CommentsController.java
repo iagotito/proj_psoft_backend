@@ -36,6 +36,19 @@ public class CommentsController {
     }
 
     @CrossOrigin
+    @PostMapping("/{id}/answers")
+    public ResponseEntity<?> commentComment (@RequestHeader("Authorization") String header, @PathVariable String url,
+                                             @PathVariable String id, @RequestBody Comment comment) {
+        try {
+            return new ResponseEntity<Comment>(commentsService.addAnswer(header, url, id, comment),
+                    HttpStatus.CREATED);
+        } catch (ServletException e) {
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("")
     public ResponseEntity<?> getCampaignComments (@PathVariable String url) {
         try {

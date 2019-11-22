@@ -44,7 +44,7 @@ public class Campaign {
         this.deadline = deadline;
         this.goal = goal;
         this.donations = 0;
-        this.comments = new LinkedList<>();
+        this.comments = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
 
@@ -139,6 +139,15 @@ public class Campaign {
 
     public void instanciationLikes(){
         this.likes = new ArrayList<>();
+    }
+
+    public Comment getCommentById(String id){
+        for(int i = 0; i < this.comments.size(); i++){
+            if(this.comments.get(i).getId().equals(id)){
+                return this.comments.get(i);
+            }
+        }
+        return null;
     }
 
     public List<String> getLikes() {

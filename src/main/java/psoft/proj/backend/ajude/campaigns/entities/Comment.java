@@ -5,31 +5,32 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
-@Document(collection = "Comment")
 public class Comment {
 
-    @Id
     private String id;
     // owner email
     private String owner;
     // campaign url
     private String campaign;
-    private boolean isResposta;
-    private String text;
-/*
-    @OneToMany(targetEntity = Comment.class, mappedBy = "id",
-            cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Comment> answers;
 
- */
+	private boolean isAnswer;
+    private List<Comment> answers;
+    private String text;
+
     public Comment () {
         super();
     }
+
+	public Comment (String text) {
+		super();
+		this.text = text;
+		this.answers = new LinkedList<>();
+	}
 
     public String getId() {
 		return id;
@@ -63,10 +64,23 @@ public class Comment {
 		this.text = text;
 	}
 
-	public Comment (String text) {
-        super();
-        this.text = text;
-        //this.answers = new LinkedList<>();
-    }
+	public boolean getIsAnswer() {
+		return this.isAnswer;
+	}
 
+	public void instanciationAnswers(){
+		this.answers = new ArrayList<>();
+	}
+
+	public void setIsAnswer() {
+		this.isAnswer = true;
+	}
+
+	public List<Comment> getAnswers() {
+		return this.answers;
+	}
+
+	public void setAnswer(Comment comment) {
+		this.answers.add(comment);
+	}
 }
