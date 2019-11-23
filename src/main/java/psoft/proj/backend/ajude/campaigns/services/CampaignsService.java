@@ -54,6 +54,30 @@ public class CampaignsService {
         return campaignDAO.findAll();
     }
 
+    public List<Campaign> filterCampaigns (String sort, String status, String substring) {
+        List<Campaign> campaigns = campaignDAO.findAll();
+        List<Campaign> filteredCampaigns = new ArrayList<>();
+        // first ew filter the campaigns by the status filter
+        for (Campaign c : campaigns) {
+            if (status.equals("all") || parseStatus(c.getStatus()).equals(status)) {
+                if (substring.equals(""))
+                    filteredCampaigns.add(c);
+                else if (c.getName().contains(substring))
+                    filteredCampaigns.add(c);
+            }
+        }
+
+        // then we sort based on the sort parameter
+        if (sort.equals("deadline"))
+            Collections.sort(filteredCampaigns, new DeadlineCompare());
+        else if (sort.equals("donations"))
+            Collections.sort(filteredCampaigns, new DonationsCompare());
+        else
+            Collections.sort(filteredCampaigns, new LikesCompare());
+
+        return filteredCampaigns;
+    }
+
     public Boolean contaisUrl(String url) {
         return campaignDAO.findById(url).isPresent();
     }
@@ -75,30 +99,12 @@ public class CampaignsService {
     }
 
     public List<Campaign> getTop5Campaigns(String sort, String status, String substring) {
-        List<Campaign> campaigns = campaignDAO.findAll();
-        List<Campaign> filteredCampaigns = new ArrayList<>();
-        // first ew filter the campaigns by the status filter
-        for (Campaign c : campaigns) {
-            if (status.equals("all") || parseStatus(c.getStatus()).equals(status)) {
-                if (substring.equals(""))
-                    filteredCampaigns.add(c);
-                else if (c.getName().contains(substring))
-                    filteredCampaigns.add(c);
-            }
-        }
-
-        // then we sort based on the sort parameter
-        if (sort.equals("deadline"))
-            Collections.sort(filteredCampaigns, new DeadlineCompare());
-        else if (sort.equals("donations"))
-            Collections.sort(filteredCampaigns, new DonationsCompare());
-        else
-            Collections.sort(filteredCampaigns, new LikesCompare());
+        List<Campaign> filteredCampaigns = filterCampaigns(sort, status, substring);
 
         if (filteredCampaigns.size() < 5)
             return filteredCampaigns;
         else
-            return filteredCampaigns.subList(0, 6);
+            return filteredCampaigns.subList(0, 5);
     }
 
     private String parseStatus (String status) {

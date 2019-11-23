@@ -48,6 +48,18 @@ public class CampaignController {
     }
 
     @CrossOrigin
+    @GetMapping(path = {"/all/filter-by/{sort}/{status}",
+            "/all/filter-by/{sort}/{status}/{substring}"})
+    public ResponseEntity<List<Campaign>> getCampaigns (@PathVariable("sort") String sort,
+                                                        @PathVariable("status") String status,
+                                                        @PathVariable("substring") Optional<String> substring) {
+        if (substring.isPresent())
+            return new ResponseEntity<List<Campaign>>(campaignsService.filterCampaigns(sort, status, substring.get()), HttpStatus.OK);
+        else
+            return new ResponseEntity<List<Campaign>>(campaignsService.filterCampaigns(sort, status, ""), HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @GetMapping(path = {"/top-5/filter-by/{sort}/{status}",
             "/top-5/filter-by/{sort}/{status}/{substring}"})
     public ResponseEntity<List<Campaign>> getTop5Campaigns (@PathVariable("sort") String sort,
