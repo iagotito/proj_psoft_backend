@@ -1,13 +1,15 @@
 package psoft.proj.backend.ajude.campaigns.services;
 
 import org.springframework.stereotype.Service;
+import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.DeadlineCompare;
+import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.DonationsCompare;
+import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.LikesCompare;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.repositorys.CampaignsRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CampaignsService {
@@ -74,74 +76,35 @@ public class CampaignsService {
 
     public List<Campaign> getTop5Campaigns(String sort, String status, String substring) {
         List<Campaign> campaigns = campaignDAO.findAll();
-        Campaign[] top5 = new Campaign[5];
+        List<Campaign> filteredCampaigns = new ArrayList<>();
+        // first ew filter the campaigns by the status filter
         for (Campaign c : campaigns) {
-            if (status.equals("all") || convertStatus(status).equals(c.getStatus())) {
+            if (status.equals("all") || parseStatus(c.getStatus()).equals(status)) {
                 if (substring.equals(""))
-                    addInTop5(top5, c);
+                    filteredCampaigns.add(c);
                 else if (c.getName().contains(substring))
-                    addInTop5(top5, c);
+                    filteredCampaigns.add(c);
             }
         }
-        List<Campaign> ret = new LinkedList<Campaign>();
-        for (Campaign c : top5) {
-            if (c != null)
-                ret.add(c);
-        }
-        return ret;
-    }
 
-    private String convertStatus (String status) {
-        if (status.equals("active")) return "ativa";
-        else if (status.equals("concluded")) return "concluída";
-        else return "vencida";
-    }
-
-    private void addInTop5 (Campaign[] top5, Campaign campaign) {
-        if (top5 == null)
-            top5[0] = campaign;
-        else {
-            int i = 0;
-            boolean insertion = false;
-            while (!insertion && i < 5) {
-                if (top5[i] != null) {
-                    if (isAbove(campaign, top5[i])) {
-                        addAndShift(campaign, top5, i);
-                        insertion = true;
-                    }
-                } else {
-                    addAndShift (campaign, top5, i);
-                    insertion = true;
-                }
-                i++;
-            }
-        }
-    }
-
-    private void addAndShift (Campaign campaign, Campaign[] top5, int p) {
-        Campaign aux1 = campaign;
-        Campaign aux2;
-        for (int i = p; i < 5; i++) {
-            aux2 = top5[i];
-            top5[i] = aux1;
-            aux1 = aux2;
-        }
-    }
-
-    // the priority is for the campaign that hasn't reached its goal and has more donations
-    private boolean isAbove(Campaign newCampaign, Campaign campaing) {
-        int p = 0;
-        if (newCampaign.getDonations() >= newCampaign.getGoal())
-            p -= 2;
-        if (campaing.getDonations() >= campaing.getGoal())
-            p += 2;
-
-        if (newCampaign.getDonations() >= campaing.getDonations())
-            p++;
+        // then we sort based on the sort parameter
+        if (sort.equals("deadline"))
+            Collections.sort(filteredCampaigns, new DeadlineCompare());
+        else if (sort.equals("donations"))
+            Collections.sort(filteredCampaigns, new DonationsCompare());
         else
-            p--;
+            Collections.sort(filteredCampaigns, new LikesCompare());
 
-        return p > 0;
+        if (filteredCampaigns.size() < 5)
+            return filteredCampaigns;
+        else
+            return filteredCampaigns.subList(0, 6);
+    }
+
+    private String parseStatus (String status) {
+        if (status.equals("ativa")) return "active";
+        else if (status.equals("concluída")) return "concluded";
+        else return "expired";
     }
 
     public void toLike(String url, String header) throws ServletException {
