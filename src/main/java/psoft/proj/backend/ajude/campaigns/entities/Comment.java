@@ -15,6 +15,7 @@ public class Comment {
     // campaign url
     private String campaign;
 
+	private boolean wasDeleted;
 	private boolean isAnswer;
     private List<Comment> answers;
     private String text;
@@ -79,5 +80,13 @@ public class Comment {
 
 	public void setAnswer(Comment comment) {
 		this.answers.add(comment);
+	}
+
+	public boolean getWasDeleted() {
+		return this.wasDeleted;
+	}
+
+	public void setWasDeleted() {
+		this.wasDeleted = true;
 	}
 }

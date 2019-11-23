@@ -137,6 +137,16 @@ public class Campaign {
 
     public Comment getCommentById(String id){
         for(int i = 0; i < this.comments.size(); i++){
+            // Caso o comentario possua respostas (ou seja, caso sua lista de respostas não seja vazia)
+            if(!this.comments.get(i).getAnswers().isEmpty()) {
+                // cria-se um laço até o tamanho da lista de respostas
+                for (int j = 0; j < this.comments.get(i).getAnswers().size(); j++) {
+                    // acessa-se cada elemento da lista de respostas daquele comentario, comparando o id
+                    if (this.comments.get(i).getAnswers().get(j).getId().equals(id)) {
+                        return this.comments.get(i).getAnswers().get(j);
+                    }
+                }
+            }
             if(this.comments.get(i).getId().equals(id)){
                 return this.comments.get(i);
             }

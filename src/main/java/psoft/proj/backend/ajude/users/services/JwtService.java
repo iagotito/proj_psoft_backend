@@ -57,6 +57,7 @@ public class JwtService {
 
     public User getUserByHeader(String header) throws ServletException {
         return usersService.getUser(getTokenSubject(header));
+
     }
 
 }
