@@ -8,7 +8,6 @@ import psoft.proj.backend.ajude.users.services.JwtService;
 import psoft.proj.backend.ajude.users.services.UsersService;
 
 import javax.servlet.ServletException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")

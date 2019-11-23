@@ -7,7 +7,6 @@ import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsersService {

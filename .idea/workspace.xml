@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3fe4c170-e1c2-41c7-a249-c3a5b91e497d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/repositorys/CampaignsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/repositorys/CampaignsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/repositorys/CommentsRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/repositorys/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/repositorys/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

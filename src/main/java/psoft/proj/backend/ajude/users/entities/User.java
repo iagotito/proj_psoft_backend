@@ -17,9 +17,6 @@ public class User{
     private String lname;
     private String password;
     private String credit_card;
-    // TODO (verificar necessidade) @OneToMany(targetEntity = Campaign.class, mappedBy = "owner",
-    //        cascade = CascadeType.ALL)
-    private List campaigns;
 
     public String getEmail() {
         return email;
@@ -61,14 +58,6 @@ public class User{
         this.credit_card = credit_card;
     }
 
-    public List getCampaigns() {
-        return campaigns;
-    }
-
-    public void setCampaigns(List campaigns) {
-        this.campaigns = campaigns;
-    }
-
     private User () { super(); }
 
     private User (String email, String fname, String lname, String password, String credit_card) {
@@ -78,6 +67,5 @@ public class User{
         this.lname = lname;
         this.password = password;
         this.credit_card = credit_card;
-        campaigns = new LinkedList<Campaign>();
     }
 }

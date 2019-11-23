@@ -1,7 +1,5 @@
 package psoft.proj.backend.ajude.campaigns.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,9 +23,6 @@ public class Campaign {
     private double donations;
 
     private List<Comment> comments;
-
-    @JsonProperty("likes")
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<String> likes;
 
     public Campaign() {
@@ -47,7 +42,6 @@ public class Campaign {
         this.comments = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
-
 
     // TODO: usar isso para alterar o status
     public void checkStatus() throws ParseException {
