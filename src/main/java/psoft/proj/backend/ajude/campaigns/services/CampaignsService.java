@@ -72,17 +72,29 @@ public class CampaignsService {
         return campaigns;
     }
 
-    public List<Campaign> getTop5Campaigns() {
+    public List<Campaign> getTop5Campaigns(String sort, String status, String substring) {
         List<Campaign> campaigns = campaignDAO.findAll();
         Campaign[] top5 = new Campaign[5];
-        for (Campaign c : campaigns)
-            addInTop5 (top5, c);
+        for (Campaign c : campaigns) {
+            if (status.equals("all") || convertStatus(status).equals(c.getStatus())) {
+                if (substring.equals(""))
+                    addInTop5(top5, c);
+                else if (c.getName().contains(substring))
+                    addInTop5(top5, c);
+            }
+        }
         List<Campaign> ret = new LinkedList<Campaign>();
         for (Campaign c : top5) {
             if (c != null)
                 ret.add(c);
         }
         return ret;
+    }
+
+    private String convertStatus (String status) {
+        if (status.equals("active")) return "ativa";
+        else if (status.equals("concluded")) return "concluída";
+        else return "vencida";
     }
 
     private void addInTop5 (Campaign[] top5, Campaign campaign) {

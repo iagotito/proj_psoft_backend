@@ -10,6 +10,7 @@ import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/campaigns")
@@ -47,9 +48,15 @@ public class CampaignController {
     }
 
     @CrossOrigin
-    @GetMapping("/top-5")
-    public ResponseEntity<List<Campaign>> getTop5Campaigns () {
-        return new ResponseEntity<List<Campaign>>(campaignsService.getTop5Campaigns(), HttpStatus.OK);
+    @GetMapping(path = {"/top-5/filter-by/{sort}/{status}",
+            "/top-5/filter-by/{sort}/{status}/{substring}"})
+    public ResponseEntity<List<Campaign>> getTop5Campaigns (@PathVariable("sort") String sort,
+                                                            @PathVariable("status") String status,
+                                                            @PathVariable("substring") Optional<String> substring) {
+        if (substring.isPresent())
+            return new ResponseEntity<List<Campaign>>(campaignsService.getTop5Campaigns(sort, status, substring.get()), HttpStatus.OK);
+        else
+            return new ResponseEntity<List<Campaign>>(campaignsService.getTop5Campaigns(sort, status, ""), HttpStatus.OK);
     }
 
     @CrossOrigin
