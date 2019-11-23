@@ -18,13 +18,14 @@ public class CommentsService {
     private JwtService jwtService;
     private CampaignsService campaignsService;
     private CampaignsRepository campaignsDAO;
-    private int idCounter = 0;
+    private int idCounter;
 
     public CommentsService (JwtService jwtService, CampaignsService campaignsService, CampaignsRepository campaignsDAO) {
         super();
         this.jwtService = jwtService;
         this.campaignsService = campaignsService;
         this.campaignsDAO = campaignsDAO;
+        this.idCounter++;
     }
 
     public Comment addComment(String header, String url, Comment comment) throws ServletException {
@@ -35,7 +36,8 @@ public class CommentsService {
 
         comment.setOwner(jwtService.getTokenSubject(header));
         comment.setCampaign(url);
-        comment.setId(Integer.toString(this.idCounter++));
+        this.idCounter++;
+        comment.setId(Integer.toString(this.idCounter));
         comment.instanciationAnswers();
 
         Optional<Campaign> newCampaign = campaignsDAO.findById(url);
@@ -58,15 +60,14 @@ public class CommentsService {
 
         answer.setOwner(jwtService.getTokenSubject(header));
         answer.setCampaign(url);
-        answer.setId(Integer.toString(this.idCounter++));
+        this.idCounter++;
+        answer.setId(Integer.toString(this.idCounter));
         answer.setIsAnswer();
         answer.instanciationAnswers();
 
         Optional<Campaign> newCampaign = campaignsDAO.findById(url);
 
         if(newCampaign.isPresent()){
-            List<Comment> comments = newCampaign.get().getComments();
-
             Comment comment = newCampaign.get().getCommentById(id);
 
             if(comment == null)
