@@ -10,9 +10,9 @@ import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -44,7 +44,8 @@ public class DonationsService {
         donation.setOwner(jwtService.getTokenSubject(header));
         donation.setCampaign(url);
 
-        // todo set data
+        LocalDate currentDate = LocalDate.now();
+        donation.setDate(currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         donationDAO.save(donation);
 
