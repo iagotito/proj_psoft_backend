@@ -10,6 +10,9 @@ import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -40,6 +43,7 @@ public class DonationsService {
 
         donation.setOwner(jwtService.getTokenSubject(header));
         donation.setCampaign(url);
+
         // todo set data
 
         donationDAO.save(donation);

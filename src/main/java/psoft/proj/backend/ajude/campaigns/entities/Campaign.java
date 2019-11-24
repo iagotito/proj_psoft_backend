@@ -23,7 +23,6 @@ public class Campaign {
     private double donated;
 
     private List<String> donationsIds;
-
     private List<Comment> comments;
     private List<String> likes;
 
@@ -47,7 +46,7 @@ public class Campaign {
 
     // TODO: usar isso para alterar o status
     public void checkStatus() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
         Date deadline = sdf.parse(this.deadline);
 

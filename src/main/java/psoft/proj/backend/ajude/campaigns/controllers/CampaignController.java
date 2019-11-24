@@ -99,8 +99,7 @@ public class CampaignController {
     @PostMapping("/{url}/likes")
     public ResponseEntity<?> toLike (@PathVariable String url, @RequestHeader("Authorization") String header){
         try {
-            campaignsService.toLike(url, header);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(campaignsService.toLike(url, header), HttpStatus.OK);
         } catch(ServletException e) {
             if(e.getMessage().equals("Campaign not found.")){
                 return new ResponseEntity<>(new ExceptionResponse("Campaign not found."), HttpStatus.NOT_FOUND);

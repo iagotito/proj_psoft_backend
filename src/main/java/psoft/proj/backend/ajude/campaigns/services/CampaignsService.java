@@ -116,7 +116,7 @@ public class CampaignsService {
         else return "expired";
     }
 
-    public void toLike(String url, String header) throws ServletException {
+    public Campaign toLike(String url, String header) throws ServletException {
         String email = jwtService.getTokenSubject(header);
         Campaign newCampaign = this.getCampaign(url);
 
@@ -129,5 +129,6 @@ public class CampaignsService {
         campaignDAO.delete(this.getCampaign(url));
         campaignDAO.save(newCampaign);
 
+        return newCampaign;
     }
 }
