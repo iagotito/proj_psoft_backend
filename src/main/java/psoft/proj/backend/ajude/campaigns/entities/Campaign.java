@@ -20,7 +20,9 @@ public class Campaign {
     private String deadline;
     private String status;
     private double goal;
-    private double donations;
+    private double donated;
+
+    private List<String> donationsIds;
 
     private List<Comment> comments;
     private List<String> likes;
@@ -38,7 +40,7 @@ public class Campaign {
         this.description = description;
         this.deadline = deadline;
         this.goal = goal;
-        this.donations = 0;
+        this.donated = 0;
         this.comments = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
@@ -53,7 +55,7 @@ public class Campaign {
         if (currentDate.compareTo(deadline) > 0)
             return;
 
-        if (donations >= goal)
+        if (donated >= goal)
             setStatus("concluída");
         else
             setStatus("vencida");
@@ -116,11 +118,11 @@ public class Campaign {
     }
 
     public double getDonations() {
-        return donations;
+        return this.donated;
     }
 
     public void setDonations(double donations) {
-        this.donations = donations;
+        this.donated += donations;
     }
 
     public List<Comment> getComments() {
@@ -133,6 +135,10 @@ public class Campaign {
 
     public void instanciationLikes(){
         this.likes = new ArrayList<>();
+    }
+
+    public void instanciationDonationsIds(){
+        this.donationsIds = new ArrayList<>();
     }
 
     public Comment getCommentById(String id){
@@ -164,5 +170,13 @@ public class Campaign {
 
     public void removeLike(String email) {
         this.likes.remove(email);
+    }
+
+    public List<String> getDonationsIds() {
+        return donationsIds;
+    }
+
+    public void setDonationsIds(String donationsIds) {
+        this.donationsIds.add(donationsIds);
     }
 }

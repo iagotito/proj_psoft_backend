@@ -6,6 +6,8 @@ import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.Donations
 import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.LikesCompare;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.repositorys.CampaignsRepository;
+import psoft.proj.backend.ajude.users.entities.User;
+import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
@@ -27,6 +29,7 @@ public class CampaignsService {
         campaign.setStatus("ativa");
         campaign.instanciationComments();
         campaign.instanciationLikes();
+        campaign.instanciationDonationsIds();
 
         // Vai ver se a url já existe, se sim, vai aumentando um contador ao fim dela.
         campaign.setUrl(newUrl(campaign.getUrl()));

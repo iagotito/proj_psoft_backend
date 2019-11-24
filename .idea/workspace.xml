@@ -2,15 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5b7179-1324-4444-b543-36ffd2d39b4e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/DonationsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Donation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/repositorys/DonationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/DonationsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CommentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CommentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

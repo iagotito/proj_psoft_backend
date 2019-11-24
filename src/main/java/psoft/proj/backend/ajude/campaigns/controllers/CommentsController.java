@@ -56,7 +56,7 @@ public class CommentsController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteComment (@RequestHeader("Authorization") String header, @PathVariable String url,
                                              @PathVariable String id) {
         try {

@@ -3,20 +3,32 @@ package psoft.proj.backend.ajude.users.entities;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Document(collection = "User")
 public class User{
+
     @Id
     private String email;
     private String fname;
     private String lname;
     private String password;
     private String credit_card;
+    private List<String> donationsIds;
+
+    private User () { super(); }
+
+    private User (String email, String fname, String lname, String password, String credit_card) {
+        super();
+        this.email = email;
+        this.fname = fname;
+        this.lname = lname;
+        this.password = password;
+        this.credit_card = credit_card;
+    }
 
     public String getEmail() {
         return email;
@@ -58,14 +70,16 @@ public class User{
         this.credit_card = credit_card;
     }
 
-    private User () { super(); }
-
-    private User (String email, String fname, String lname, String password, String credit_card) {
-        super();
-        this.email = email;
-        this.fname = fname;
-        this.lname = lname;
-        this.password = password;
-        this.credit_card = credit_card;
+    public List<String> getDonationsIds() {
+        return donationsIds;
     }
+
+    public void setDonationsIds(String donationsIds) {
+        this.donationsIds.add(donationsIds);
+    }
+
+    public void instanciationDonationsIds(){
+        this.donationsIds = new ArrayList<>();
+    }
+
 }

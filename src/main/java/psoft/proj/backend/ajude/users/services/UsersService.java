@@ -21,7 +21,7 @@ public class UsersService {
     public User createUser (User user) throws ServerException {
         if (usersDAO.findById(user.getEmail()).isPresent())
             throw new ServerException("E-mail already registered.");
-
+        user.instanciationDonationsIds();
         return (User) usersDAO.save(user);
     }
 
