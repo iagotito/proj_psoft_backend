@@ -1,6 +1,7 @@
 package psoft.proj.backend.ajude.users.services;
 
 import org.springframework.stereotype.Service;
+import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 

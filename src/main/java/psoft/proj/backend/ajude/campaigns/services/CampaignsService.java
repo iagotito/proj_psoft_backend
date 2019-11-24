@@ -77,7 +77,8 @@ public class CampaignsService {
             Collections.sort(filteredCampaigns, new DonationsCompare());
         else
             Collections.sort(filteredCampaigns, new LikesCompare());
-
+        // todo filtrar (talvez antes de adicionar em filtered campaigns) as campanhas que já foram concluídas
+        // todo filtrar (das campanhas ja filtradas) os comentarios que devem ser exibidos.
         return filteredCampaigns;
     }
 
