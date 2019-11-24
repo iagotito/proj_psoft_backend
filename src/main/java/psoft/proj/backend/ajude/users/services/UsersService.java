@@ -1,5 +1,6 @@
 package psoft.proj.backend.ajude.users.services;
 
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.entities.Donation;
@@ -20,19 +21,28 @@ public class UsersService {
     private UsersRepository usersDAO;
     private CampaignsRepository campaignsDAO;
     private DonationsRepository donationsDAO;
+    private EmailService emailService;
 
     public UsersService(UsersRepository<User, String> usersDAO, CampaignsRepository campaignsDAO,
-                        DonationsRepository donationsDAO) {
+                        DonationsRepository donationsDAO, EmailService emailService) {
         super();
         this.usersDAO = usersDAO;
         this.campaignsDAO = campaignsDAO;
         this.donationsDAO = donationsDAO;
+        this.emailService = emailService;
     }
 
     public User createUser (User user) throws ServerException {
         if (usersDAO.findById(user.getEmail()).isPresent())
             throw new ServerException("E-mail already registered.");
         user.instanciationDonationsIds();
+        try {
+            emailService.sendEmail(user.getEmail());
+        } catch (ServletException e){
+            throw new ServerException("Invalid e-mail");
+        }
+
+
         return (User) usersDAO.save(user);
     }
 

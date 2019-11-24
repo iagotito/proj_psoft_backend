@@ -35,8 +35,14 @@ public class UsersController {
         try {
             return new ResponseEntity<User>(usersService.createUser(user), HttpStatus.CREATED);
         } catch (ServerException e) {
-            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
-                    HttpStatus.FORBIDDEN);
+            if(e.getMessage().equals("E-mail already registered.")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.FORBIDDEN);
+            } else{
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            }
+
         }
     }
 
