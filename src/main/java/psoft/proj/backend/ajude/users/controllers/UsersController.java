@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
+import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.services.JwtService;
@@ -66,6 +67,17 @@ public class UsersController {
     public ResponseEntity<?> getUser (@PathVariable String email) {
         try {
             return new ResponseEntity<User>(usersService.getUser(email), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/{email}/campaigns")
+    public ResponseEntity<?> getUserCampaigns (@PathVariable String email) {
+        try {
+            return new ResponseEntity<List<Campaign>>(usersService.getUserCampaigns(email), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
