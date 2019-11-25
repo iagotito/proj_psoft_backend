@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
+import psoft.proj.backend.ajude.campaigns.entities.Donation;
 import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
@@ -87,7 +88,7 @@ public class CampaignController {
     @GetMapping("/{url}/donations")
     public ResponseEntity<?> getDonations (@PathVariable String url) {
         try {
-            return new ResponseEntity<Campaign>(campaignsService.getCampaign(url),
+            return new ResponseEntity<List<Donation>>(campaignsService.getDonations(url),
                     HttpStatus.OK);
         } catch (ServletException e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
