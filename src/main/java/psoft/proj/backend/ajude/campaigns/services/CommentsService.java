@@ -94,10 +94,14 @@ public class CommentsService {
             if(!allComments.get(i).getWasDeleted()) {
                 // Adiciona-se ele à lista de comentários não deletados
                 notDeletedComments.add(allComments.get(i));
-                // (conferir respostas?)
             }
         }
         return notDeletedComments;
+    }
+
+    public List<Comment> getCommentsAnswers(String url, String id) throws ServletException {
+        Comment comment = campaignsService.getCampaign(url).getCommentById(id);
+        return comment.getAnswers();
     }
 
     public Campaign deleteComment(String header, String url, String id) throws ServletException {
@@ -128,4 +132,5 @@ public class CommentsService {
         }
         return newCampaign.get();
     }
+
 }

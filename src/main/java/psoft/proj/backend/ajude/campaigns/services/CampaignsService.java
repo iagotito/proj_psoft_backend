@@ -5,7 +5,10 @@ import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.DeadlineC
 import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.DonationsCompare;
 import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.LikesCompare;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
+import psoft.proj.backend.ajude.campaigns.entities.Comment;
+import psoft.proj.backend.ajude.campaigns.entities.Donation;
 import psoft.proj.backend.ajude.campaigns.repositorys.CampaignsRepository;
+import psoft.proj.backend.ajude.campaigns.repositorys.DonationsRepository;
 import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
@@ -19,11 +22,14 @@ import java.util.*;
 public class CampaignsService {
     private CampaignsRepository campaignDAO;
     private JwtService jwtService;
+    private DonationsRepository donationsDAO;
 
-    public CampaignsService (CampaignsRepository campaignsRepository, JwtService jwtService) {
+    public CampaignsService (CampaignsRepository campaignsRepository, JwtService jwtService,
+                             DonationsRepository donationsRepository) {
         super ();
         this.campaignDAO = campaignsRepository;
         this.jwtService = jwtService;
+        this.donationsDAO = donationsRepository;
     }
 
     public Campaign createCampaign (String header, Campaign campaign) throws ServletException {
@@ -120,6 +126,21 @@ public class CampaignsService {
         if (status.equals("ativa")) return "active";
         else if (status.equals("concluída")) return "concluded";
         else return "expired";
+    }
+
+    public List<Donation> getDonations (String url) throws ServletException {
+        Campaign campaign = this.getCampaign(url);
+        List<String> donationsIds = campaign.getDonationsIds();
+
+        List<Donation> campaignDonations = new ArrayList<>();
+
+        for(int j = 0; j < donationsIds.size(); j++){
+            Optional<Donation> donation = (donationsDAO.findById(donationsIds.get(j)));
+            if(donation.isPresent()){
+                campaignDonations.add(donation.get());
+            }
+        }
+        return campaignDonations;
     }
 
     public Campaign toLike(String url, String header) throws ServletException {

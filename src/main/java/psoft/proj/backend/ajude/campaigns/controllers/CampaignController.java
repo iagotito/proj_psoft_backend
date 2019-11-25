@@ -84,6 +84,18 @@ public class CampaignController {
     }
 
     @CrossOrigin
+    @GetMapping("/{url}/donations")
+    public ResponseEntity<?> getDonations (@PathVariable String url) {
+        try {
+            return new ResponseEntity<Campaign>(campaignsService.getCampaign(url),
+                    HttpStatus.OK);
+        } catch (ServletException e) {
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/contains-url/{url}")
     public ResponseEntity<Boolean> containsUrl (@PathVariable String url) {
         return new ResponseEntity<Boolean>(campaignsService.contaisUrl(url), HttpStatus.OK);

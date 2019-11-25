@@ -84,4 +84,15 @@ public class CommentsController {
                     HttpStatus.NOT_FOUND);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/{id}/answers")
+    public ResponseEntity<?> getCommentsAnswers (@PathVariable String url, @PathVariable String id) {
+        try {
+            return new ResponseEntity<List<Comment>>(commentsService.getCommentsAnswers(url, id), HttpStatus.OK);
+        } catch (ServletException e) {
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
 }
