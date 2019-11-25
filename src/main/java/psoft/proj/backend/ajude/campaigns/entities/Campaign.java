@@ -22,6 +22,8 @@ public class Campaign {
     private double goal;
     private double donated;
 
+    private String date;
+
     private List<String> donationsIds;
     private List<Comment> comments;
     private List<String> likes;
@@ -31,7 +33,7 @@ public class Campaign {
     }
 
     public Campaign(String owner, String name, String url, String description,
-                    String deadline, double goal) {
+                    String deadline, double goal, String date) {
         super();
         this.owner = owner;
         this.name = name;
@@ -42,6 +44,7 @@ public class Campaign {
         this.donated = 0;
         this.comments = new ArrayList<>();
         this.likes = new ArrayList<>();
+        this.date = date;
     }
 
     // TODO: usar isso para alterar o status
@@ -177,5 +180,13 @@ public class Campaign {
 
     public void setDonationsIds(String donationsIds) {
         this.donationsIds.add(donationsIds);
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

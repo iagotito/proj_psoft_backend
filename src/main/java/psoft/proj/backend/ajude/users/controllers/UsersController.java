@@ -13,6 +13,7 @@ import psoft.proj.backend.ajude.users.services.UsersService;
 import javax.servlet.ServletException;
 import java.rmi.ServerException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -80,10 +81,31 @@ public class UsersController {
     }
 
     @CrossOrigin
-    @GetMapping("/{email}/campaigns")
-    public ResponseEntity<?> getUserCampaigns (@PathVariable String email) {
+    @GetMapping(path = {"{email}/campaigns",
+            "{email}/campaigns/{substring}"})
+    public ResponseEntity<?> getUserCampaignsDonated (@PathVariable String email, @PathVariable("substring") Optional<String> substring) {
         try {
-            return new ResponseEntity<List<Campaign>>(usersService.getUserCampaigns(email), HttpStatus.OK);
+            if(substring.isPresent()){
+                return new ResponseEntity<List<Campaign>>(usersService.getUserCampaigns(email, substring.get()), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Campaign>>(usersService.getUserCampaigns(email, ""), HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping(path = {"{email}/campaignsDonated",
+            "{email}/campaignsDonated/{substring}"})
+    public ResponseEntity<?> getUserCampaigns (@PathVariable String email, @PathVariable("substring") Optional<String> substring) {
+        try {
+            if(substring.isPresent()){
+                return new ResponseEntity<List<Campaign>>(usersService.getUserCampaignsDonated(email, substring.get()), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Campaign>>(usersService.getUserCampaignsDonated(email, ""), HttpStatus.OK);
+            }
         } catch (Exception e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);

@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5b7179-1324-4444-b543-36ffd2d39b4e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/auxiliaryEntities/campaignsComparators/DateCompare.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/auxiliaryEntities/campaignsComparators/LikesCompare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/auxiliaryEntities/campaignsComparators/LikesCompare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/UsersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplication.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

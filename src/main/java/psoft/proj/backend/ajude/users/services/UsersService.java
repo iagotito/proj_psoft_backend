@@ -2,6 +2,7 @@ package psoft.proj.backend.ajude.users.services;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import psoft.proj.backend.ajude.auxiliaryEntities.campaignsComparators.DateCompare;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.entities.Donation;
 import psoft.proj.backend.ajude.campaigns.repositorys.CampaignsRepository;
@@ -11,9 +12,7 @@ import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 
 import javax.servlet.ServletException;
 import java.rmi.ServerException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UsersService {
@@ -50,20 +49,37 @@ public class UsersService {
         return usersDAO.findAll();
     }
 
-    public List<Campaign> getUserCampaigns(String email) throws ServletException {
+    public List<Campaign> getUserCampaigns(String email, String substring) throws ServletException {
         List<Campaign> campaigns = campaignsDAO.findAll();
-        return this.filterByOwner(campaigns, email);
+        return this.filterCampaignsByOwner(campaigns, email, substring);
     }
 
-    public List<Campaign> filterByOwner(List<Campaign> campaigns, String email){
+    public List<Campaign> getUserCampaignsDonated(String email, String substring) throws ServletException {
+        List<Campaign> campaigns = campaignsDAO.findAll();
+        return this.filterCampaignsDonatedByOwner(campaigns, email, substring);
+    }
+
+    public List<Campaign> filterCampaignsByOwner(List<Campaign> campaigns, String email, String substring){
+
         List<Campaign> userCampaigns = new ArrayList<>();
 
         for(int i = 0; i < campaigns.size(); i++){
             if(campaigns.get(i).getOwner().equals(email)){
-                userCampaigns.add(campaigns.get(i));
+                if (substring.equals(""))
+                    userCampaigns.add(campaigns.get(i));
+                else if (campaigns.get(i).getName().contains(substring))
+                    userCampaigns.add(campaigns.get(i));
             }
         }
+
+        Collections.sort(userCampaigns, new DateCompare());
+
+        return userCampaigns;
+    }
+
+    public List<Campaign> filterCampaignsDonatedByOwner(List<Campaign> campaigns, String email, String substring) {
         Optional<User> user = usersDAO.findById(email);
+        List<Campaign> userCampaignsDonated = new ArrayList<>();
 
         if(user.isPresent()){
             List<String> donations = user.get().getDonationsIds();
@@ -73,16 +89,20 @@ public class UsersService {
                 if(donation.isPresent()){
                     String id = donation.get().getCampaign();
                     Optional<Campaign> campaign = campaignsDAO.findById(id);
-                    if(campaign.isPresent() && !userCampaigns.contains(campaign.get())){
-                        userCampaigns.add(campaign.get());
+                    if(campaign.isPresent() && !userCampaignsDonated.contains(campaign.get())){
+                        if (substring.equals(""))
+                            userCampaignsDonated.add(campaign.get());
+                        else if (campaign.get().getName().contains(substring))
+                            userCampaignsDonated.add(campaign.get());
                     }
                 }
             }
         }
-        return userCampaigns;
+        Collections.sort(userCampaignsDonated, new DateCompare());
+        return userCampaignsDonated;
     }
 
-    public User getUser (String email) throws ServletException {
+        public User getUser (String email) throws ServletException {
         if (!usersDAO.existsById(email))
             throw new ServletException("User not found.");
 

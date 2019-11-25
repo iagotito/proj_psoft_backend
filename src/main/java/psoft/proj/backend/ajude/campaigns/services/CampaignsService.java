@@ -11,6 +11,8 @@ import psoft.proj.backend.ajude.users.repositorys.UsersRepository;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -30,6 +32,9 @@ public class CampaignsService {
         campaign.instanciationComments();
         campaign.instanciationLikes();
         campaign.instanciationDonationsIds();
+
+        LocalDate currentDate = LocalDate.now();
+        campaign.setDate(currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         // Vai ver se a url já existe, se sim, vai aumentando um contador ao fim dela.
         campaign.setUrl(newUrl(campaign.getUrl()));

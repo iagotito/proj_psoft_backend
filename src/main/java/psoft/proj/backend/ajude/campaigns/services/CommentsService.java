@@ -94,19 +94,7 @@ public class CommentsService {
             if(!allComments.get(i).getWasDeleted()) {
                 // Adiciona-se ele à lista de comentários não deletados
                 notDeletedComments.add(allComments.get(i));
-                // Caso esse comentário, que não foi apagado, possua respostas...
-                if(!allComments.get(i).getAnswers().isEmpty()) {
-
-                    List<Comment> answers = allComments.get(i).getAnswers();
-                    // Laço para percorrer toda a lista de respostas
-                    for(int j = 0; j < answers.size(); j++){
-                        // Caso a resposta dentro do comentário não tenha sido deletada...
-                        if(!answers.get(j).getWasDeleted()){
-                            // Adiciona-se ela à lista de comentários não deletados
-                            notDeletedComments.add(answers.get(j));
-                        }
-                    }
-                }
+                // (conferir respostas?)
             }
         }
         return notDeletedComments;
