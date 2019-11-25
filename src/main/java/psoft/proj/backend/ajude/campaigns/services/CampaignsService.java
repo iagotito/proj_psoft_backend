@@ -43,8 +43,9 @@ public class CampaignsService {
         campaign.setDate(currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         // Vai ver se a url já existe, se sim, vai aumentando um contador ao fim dela.
-        campaign.setUrl(newUrl(campaign.getUrl()));
-        return (Campaign) campaignDAO.save(campaign);
+        if (!campaignDAO.existsById(campaign.getUrl()))
+            return (Campaign) campaignDAO.save(campaign);
+        throw new ServletException("Campaign already exists");
     }
 
 
