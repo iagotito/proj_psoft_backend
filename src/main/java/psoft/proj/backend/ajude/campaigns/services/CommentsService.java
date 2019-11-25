@@ -101,7 +101,13 @@ public class CommentsService {
 
     public List<Comment> getCommentsAnswers(String url, String id) throws ServletException {
         Comment comment = campaignsService.getCampaign(url).getCommentById(id);
-        return comment.getAnswers();
+        List<Comment> answers = new ArrayList<>();
+        for(int i = 0; i < comment.getAnswers().size(); i++){
+            if(!comment.getAnswers().get(i).getWasDeleted()){
+                answers.add(comment.getAnswers().get(i));
+            }
+        }
+        return answers;
     }
 
     public Campaign deleteComment(String header, String url, String id) throws ServletException {
