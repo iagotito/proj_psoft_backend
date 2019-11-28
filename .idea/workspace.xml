@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8c1b9b-d8d6-4425-9a94-7052b887db19" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,25 +16,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1UE3FRPYF0s8GSzzSKudN3eFcvK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="ProjPsoftBakckendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="psoft.proj.backend.ajude.ProjPsoftBakckendApplication" />
-      <module name="proj_psoft_bakckend" />
+      <module name="proj_psoft_backend" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="psoft.proj.backend.ajude.*" />
@@ -49,6 +43,18 @@
         <item itemvalue="Application.ProjPsoftBakckendApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -75,5 +81,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="342" y="52" width="671" height="688" key="#ProjPsoftBakckendApplication" timestamp="1574931652063">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="342" y="52" width="671" height="688" key="#ProjPsoftBakckendApplication/0.27.1366.741@0.27.1366.741" timestamp="1574931652063" />
+    <state x="339" y="224" key="com.intellij.ide.util.TipDialog" timestamp="1574931066118">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="339" y="224" key="com.intellij.ide.util.TipDialog/0.27.1366.741@0.27.1366.741" timestamp="1574931066118" />
   </component>
 </project>

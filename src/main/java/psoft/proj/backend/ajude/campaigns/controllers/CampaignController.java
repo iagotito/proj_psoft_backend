@@ -91,9 +91,12 @@ public class CampaignController {
             if(e.getMessage().equals("Token inexistente ou mal formatado!")){
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.BAD_REQUEST);
-            } else {
+            } else if (e.getMessage().equals("Token invalido ou expirado!")){
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.UNAUTHORIZED);
+            } else {
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.NOT_FOUND);
             }
         }
     }
