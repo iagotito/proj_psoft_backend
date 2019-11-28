@@ -49,8 +49,8 @@ public class CampaignsService {
         throw new ServletException("Campaign already exists");
     }
 
-    public List<Campaign> getCampaigns() {
-        return campaignDAO.findAll();
+    public List<Campaign> getCampaigns() throws ParseException {
+        return this.setStatus(campaignDAO.findAll());
     }
 
     public List<Campaign> filterCampaigns (String sort, String status, String substring) throws ParseException {
@@ -73,7 +73,6 @@ public class CampaignsService {
             Collections.sort(filteredCampaigns, new DonationsCompare());
         else
             Collections.sort(filteredCampaigns, new LikesCompare());
-        // todo filtrar (talvez antes de adicionar em filtered campaigns) as campanhas que já foram concluídas
         return this.setStatus(filteredCampaigns);
     }
 
@@ -145,13 +144,17 @@ public class CampaignsService {
 
     private Campaign setStatus(Campaign campaign) throws ParseException {
         Campaign newCampaign = campaign;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date currentDate = new Date();
-        Date deadline = sdf.parse(newCampaign.getDeadline());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate currentDate = LocalDate.now();
+        String stringCurrentDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String stringDeadline = newCampaign.getDeadline();
+
+        LocalDate dateCurrentDate = LocalDate.parse(stringCurrentDate, dtf);
+        LocalDate dateDeadline = LocalDate.parse(stringDeadline, dtf);
 
         // Se a data atual está depois da data final, altera o status
-        if (currentDate.compareTo(deadline) < 0) {
-            if (newCampaign.getDonations() >= newCampaign.getGoal() && newCampaign.getStatus().equals("meta atingida")) {
+        if (dateCurrentDate.isAfter(dateDeadline)) {
+            if (newCampaign.getStatus().equals("meta atingida") || newCampaign.getStatus().equals("concluída")) {
                 newCampaign.setStatus("concluída");
             } else {
                 newCampaign.setStatus("vencida");

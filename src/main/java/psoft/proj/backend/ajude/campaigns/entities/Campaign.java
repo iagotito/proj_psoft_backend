@@ -47,22 +47,6 @@ public class Campaign {
         this.date = date;
     }
 
-    // TODO: usar isso para alterar o status
-    public void checkStatus() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date currentDate = new Date();
-        Date deadline = sdf.parse(this.deadline);
-
-        // Se a data atual está antes da data final, não altera o status
-        if (currentDate.compareTo(deadline) > 0)
-            return;
-
-        if (this.donated >= this.goal && this.status.equals("meta atingida"))
-            setStatus("concluída");
-        else
-            setStatus("vencida");
-    }
-
     public String getOwner() {
         return owner;
     }

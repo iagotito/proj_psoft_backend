@@ -123,10 +123,7 @@ public class CommentsService {
         Optional<Campaign> newCampaign = campaignsDAO.findById(url);
 
         if(newCampaign.isPresent()){
-            List<Comment> comments = newCampaign.get().getComments();
-
             Comment comment = newCampaign.get().getCommentById(id);
-
 
             if(comment == null)
                 throw new ServletException("Comment not found");

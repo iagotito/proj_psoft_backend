@@ -38,14 +38,19 @@ public class CampaignController {
             return new ResponseEntity<Campaign>(campaignsService.createCampaign(header, campaign),
                     HttpStatus.CREATED);
         } catch (ServletException e) {
-            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
-                    HttpStatus.FORBIDDEN);
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            }
         }
     }
 
     @CrossOrigin
     @GetMapping("")
-    public ResponseEntity<List<Campaign>> getCampaigns () {
+    public ResponseEntity<List<Campaign>> getCampaigns () throws ParseException {
         return new ResponseEntity<List<Campaign>>(campaignsService.getCampaigns(), HttpStatus.OK);
     }
 
@@ -75,23 +80,41 @@ public class CampaignController {
 
     @CrossOrigin
     @GetMapping("/{url}")
-    public ResponseEntity<?> getCampaign (@PathVariable String url) {
+    public ResponseEntity<?> getCampaign (@RequestHeader("Authorization") String header, @PathVariable String url) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<Campaign>(campaignsService.getCampaign(url),
                     HttpStatus.OK);
         } catch (ServletException | ParseException e) {
-            return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
-                    HttpStatus.NOT_FOUND);
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            }
         }
     }
 
     @CrossOrigin
     @GetMapping("/{url}/donations")
-    public ResponseEntity<?> getDonations (@PathVariable String url) {
+    public ResponseEntity<?> getDonations (@RequestHeader("Authorization") String header, @PathVariable String url) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<List<Donation>>(campaignsService.getDonations(url),
                     HttpStatus.OK);
         } catch (ServletException | ParseException e) {
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else if(e.getMessage().equals("Token invalido ou expirado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            }
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
@@ -117,8 +140,12 @@ public class CampaignController {
         } catch(ServletException | ParseException e) {
             if(e.getMessage().equals("Campaign not found.")){
                 return new ResponseEntity<>(new ExceptionResponse("Campaign not found."), HttpStatus.NOT_FOUND);
+            } else if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
             } else {
-                return new ResponseEntity<>(new ExceptionResponse("Token invalido ou expirado!"), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
             }
         }
     }

@@ -7,6 +7,7 @@ import psoft.proj.backend.ajude.auxiliaryEntities.ExceptionResponse;
 import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.entities.Comment;
 import psoft.proj.backend.ajude.campaigns.services.CommentsService;
+import psoft.proj.backend.ajude.users.services.JwtService;
 
 import java.text.ParseException;
 import java.util.List;
@@ -18,10 +19,12 @@ import javax.servlet.ServletException;
 public class CommentsController {
 
     private CommentsService commentsService;
+    private JwtService jwtService;
 
-    public CommentsController (CommentsService commentsService) {
+    public CommentsController (CommentsService commentsService, JwtService jwtService) {
         super();
         this.commentsService = commentsService;
+        this.jwtService = jwtService;
     }
 
     @CrossOrigin
@@ -29,9 +32,19 @@ public class CommentsController {
     public ResponseEntity<?> commentCampaign (@RequestHeader("Authorization") String header, @PathVariable String url,
                                                     @RequestBody Comment comment) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<Comment>(commentsService.addComment(header, url, comment),
                     HttpStatus.CREATED);
         } catch (ServletException e) {
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else if(e.getMessage().equals("Token invalido ou expirado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            }
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
@@ -61,6 +74,9 @@ public class CommentsController {
     public ResponseEntity<?> deleteComment (@RequestHeader("Authorization") String header, @PathVariable String url,
                                              @PathVariable String id) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<Campaign>(commentsService.deleteComment(header, url, id),
                     HttpStatus.OK);
         } catch (ServletException e) {
@@ -68,6 +84,12 @@ public class CommentsController {
                     || e.getMessage().equals("Comment not found")) {
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.NOT_FOUND);
+            } else if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else if(e.getMessage().equals("Token invalido ou expirado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
             } else {
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.UNAUTHORIZED);
@@ -88,10 +110,20 @@ public class CommentsController {
 
     @CrossOrigin
     @GetMapping("/{id}/answers")
-    public ResponseEntity<?> getCommentsAnswers (@PathVariable String url, @PathVariable String id) {
+    public ResponseEntity<?> getCommentsAnswers (@RequestHeader("Authorization") String header, @PathVariable String url, @PathVariable String id) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<List<Comment>>(commentsService.getCommentsAnswers(url, id), HttpStatus.OK);
         } catch (ServletException | ParseException e) {
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else if(e.getMessage().equals("Token invalido ou expirado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            }
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }

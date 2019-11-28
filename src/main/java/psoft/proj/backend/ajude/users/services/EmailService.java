@@ -22,6 +22,7 @@ public class EmailService {
         msg.setTo(userEmail);
         msg.setSubject("Confirmação de cadastro no AJuDE");
         msg.setText("Bem-vindo(a) ao AJuDE!");
+        msg.setText("Faça seu login em ");
         try {
             mailSender.send(msg);
         } catch (Exception e){

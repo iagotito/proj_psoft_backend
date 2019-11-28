@@ -54,8 +54,7 @@ public class UsersController {
     }
 
     @CrossOrigin
-    //todo: achar um nome melhor pra essa rota
-    @GetMapping("/auth")
+    @GetMapping("/auth/get-user")
     public ResponseEntity<?> getUserByHeader (@RequestHeader("Authorization") String header) {
         try {
             return new ResponseEntity<User>(jwtService.getUserByHeader(header), HttpStatus.OK);

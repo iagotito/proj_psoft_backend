@@ -1,5 +1,6 @@
 package psoft.proj.backend.ajude.users.services;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
@@ -33,12 +34,6 @@ public class JwtService {
         return usersService.userExists(subject);
     }
 
-    //TODO
-    // Check if the user is owner of the campaign.
-    public boolean userHavePermissionEditCampaign(String email, Campaign campaign) {
-        return true;
-    }
-
     public String getTokenSubject(String authorizationHeader) throws ServletException {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             throw new ServletException("Token inexistente ou mal formatado!");
@@ -49,7 +44,7 @@ public class JwtService {
         String subject = null;
         try {
             subject = Jwts.parser().setSigningKey("raquel_me_da_10").parseClaimsJws(token).getBody().getSubject();
-        } catch (SignatureException e) {
+        } catch (SignatureException | ExpiredJwtException e) {
             throw new ServletException("Token invalido ou expirado!");
         }
         return subject;
