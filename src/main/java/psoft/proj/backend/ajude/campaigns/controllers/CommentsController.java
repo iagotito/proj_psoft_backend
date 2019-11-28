@@ -55,10 +55,19 @@ public class CommentsController {
     public ResponseEntity<?> commentComment (@RequestHeader("Authorization") String header, @PathVariable String url,
                                              @PathVariable String id, @RequestBody Comment comment) {
         try {
+            if (!jwtService.userExists(header))
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse("Header does not correspond to any user."),
+                        HttpStatus.NOT_FOUND);
             return new ResponseEntity<Comment>(commentsService.addAnswer(header, url, id, comment),
                     HttpStatus.CREATED);
         } catch (ServletException e) {
-            if(e.getMessage().equals("User not found.") || e.getMessage().equals("Campaign not found.")
+            if(e.getMessage().equals("Token inexistente ou mal formatado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.BAD_REQUEST);
+            } else if(e.getMessage().equals("Token invalido ou expirado!")){
+                return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
+                        HttpStatus.UNAUTHORIZED);
+            } else if(e.getMessage().equals("User not found.") || e.getMessage().equals("Campaign not found.")
                     || e.getMessage().equals("Comment not found")) {
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                         HttpStatus.NOT_FOUND);

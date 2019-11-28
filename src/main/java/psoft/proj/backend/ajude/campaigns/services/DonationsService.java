@@ -55,10 +55,6 @@ public class DonationsService {
             newCampaign.get().setDonationsIds(donation.getId());
             newCampaign.get().setDonations(donation.getAmount());
 
-            if(newCampaign.get().getGoal() <= newCampaign.get().getDonations()){
-                newCampaign.get().setStatus("meta atingida");
-            }
-
             campaignsDAO.delete(campaignsDAO.findById(donation.getCampaign()).get());
             campaignsDAO.save(newCampaign.get());
         }

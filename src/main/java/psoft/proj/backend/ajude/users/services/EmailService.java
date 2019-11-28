@@ -21,14 +21,11 @@ public class EmailService {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(userEmail);
         msg.setSubject("Confirmação de cadastro no AJuDE");
-        msg.setText("Bem-vindo(a) ao AJuDE!");
-        msg.setText("Faça seu login em ");
+        msg.setText("Bem-vindo(a) ao AJuDE!\n\nFaça seu login em psoft-ajude-o-grupo-13.surge.sh ");
         try {
             mailSender.send(msg);
         } catch (Exception e){
             throw new ServletException();
         }
-
-
     }
 }

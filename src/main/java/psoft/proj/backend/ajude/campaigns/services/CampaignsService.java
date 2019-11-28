@@ -154,7 +154,7 @@ public class CampaignsService {
 
         // Se a data atual está depois da data final, altera o status
         if (dateCurrentDate.isAfter(dateDeadline)) {
-            if (newCampaign.getStatus().equals("meta atingida") || newCampaign.getStatus().equals("concluída")) {
+            if (newCampaign.getGoal() <= newCampaign.getDonations() || newCampaign.getStatus().equals("concluída")) {
                 newCampaign.setStatus("concluída");
             } else {
                 newCampaign.setStatus("vencida");

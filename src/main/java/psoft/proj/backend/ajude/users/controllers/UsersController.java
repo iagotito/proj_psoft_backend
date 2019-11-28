@@ -59,12 +59,12 @@ public class UsersController {
         try {
             return new ResponseEntity<User>(jwtService.getUserByHeader(header), HttpStatus.OK);
         } catch (ServletException e) {
-            if (e.toString().equals("Token inexistente ou mal formatado!"))
+            if (e.getMessage().equals("Token inexistente ou mal formatado!"))
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
-                        HttpStatus.NOT_FOUND);
+                        HttpStatus.BAD_REQUEST);
             else
                 return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
-                        HttpStatus.FORBIDDEN);
+                        HttpStatus.UNAUTHORIZED);
         }
     }
 
