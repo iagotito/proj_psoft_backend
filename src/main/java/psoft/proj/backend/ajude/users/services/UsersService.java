@@ -41,7 +41,6 @@ public class UsersService {
             throw new ServerException("Invalid e-mail");
         }
 
-
         return (User) usersDAO.save(user);
     }
 

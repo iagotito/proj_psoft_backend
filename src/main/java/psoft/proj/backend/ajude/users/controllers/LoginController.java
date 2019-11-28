@@ -42,16 +42,6 @@ public class LoginController {
         }
     }
 
-    @CrossOrigin
-    @GetMapping("/valid-token")
-    public ResponseEntity<?> validToken (@RequestHeader("Authorization") String header) {
-        try {
-            return new ResponseEntity<>(jwtService.userExists(header), HttpStatus.OK);
-        } catch (ServletException e) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
-    }
-
     private class LoginResponse {
         public String token;
         public LoginResponse (String token) {

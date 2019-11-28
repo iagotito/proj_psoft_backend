@@ -10,6 +10,7 @@ import psoft.proj.backend.ajude.campaigns.services.CampaignsService;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class CampaignController {
             "/all/filter-by/{sort}/{status}/{substring}"})
     public ResponseEntity<List<Campaign>> getCampaigns (@PathVariable("sort") String sort,
                                                         @PathVariable("status") String status,
-                                                        @PathVariable("substring") Optional<String> substring) {
+                                                        @PathVariable("substring") Optional<String> substring) throws ParseException {
         if (substring.isPresent())
             return new ResponseEntity<List<Campaign>>(campaignsService.filterCampaigns(sort, status, substring.get()), HttpStatus.OK);
         else
@@ -65,7 +66,7 @@ public class CampaignController {
             "/top-5/filter-by/{sort}/{status}/{substring}"})
     public ResponseEntity<List<Campaign>> getTop5Campaigns (@PathVariable("sort") String sort,
                                                             @PathVariable("status") String status,
-                                                            @PathVariable("substring") Optional<String> substring) {
+                                                            @PathVariable("substring") Optional<String> substring) throws ParseException {
         if (substring.isPresent())
             return new ResponseEntity<List<Campaign>>(campaignsService.getTop5Campaigns(sort, status, substring.get()), HttpStatus.OK);
         else
@@ -78,7 +79,7 @@ public class CampaignController {
         try {
             return new ResponseEntity<Campaign>(campaignsService.getCampaign(url),
                     HttpStatus.OK);
-        } catch (ServletException e) {
+        } catch (ServletException | ParseException e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
@@ -90,7 +91,7 @@ public class CampaignController {
         try {
             return new ResponseEntity<List<Donation>>(campaignsService.getDonations(url),
                     HttpStatus.OK);
-        } catch (ServletException e) {
+        } catch (ServletException | ParseException e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
@@ -104,7 +105,7 @@ public class CampaignController {
 
     @CrossOrigin
     @GetMapping("/search/{substring}")
-    public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) {
+    public ResponseEntity<List<Campaign>> searchCampaigns (@PathVariable String substring) throws ParseException {
         return new ResponseEntity<List<Campaign>>(campaignsService.searchCampaigns(substring), HttpStatus.OK);
     }
 
@@ -113,7 +114,7 @@ public class CampaignController {
     public ResponseEntity<?> toLike (@PathVariable String url, @RequestHeader("Authorization") String header){
         try {
             return new ResponseEntity<>(campaignsService.toLike(url, header), HttpStatus.OK);
-        } catch(ServletException e) {
+        } catch(ServletException | ParseException e) {
             if(e.getMessage().equals("Campaign not found.")){
                 return new ResponseEntity<>(new ExceptionResponse("Campaign not found."), HttpStatus.NOT_FOUND);
             } else {

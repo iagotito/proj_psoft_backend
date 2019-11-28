@@ -8,6 +8,7 @@ import psoft.proj.backend.ajude.users.entities.User;
 import psoft.proj.backend.ajude.users.services.JwtService;
 
 import javax.servlet.ServletException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -83,7 +84,7 @@ public class CommentsService {
         return answer;
     }
 
-    public List<Comment> getCampaignsComments(String url) throws ServletException {
+    public List<Comment> getCampaignsComments(String url) throws ServletException, ParseException {
 
         List<Comment> notDeletedComments = new ArrayList<>();
         List<Comment> allComments = campaignsService.getCampaign(url).getComments();
@@ -99,7 +100,7 @@ public class CommentsService {
         return notDeletedComments;
     }
 
-    public List<Comment> getCommentsAnswers(String url, String id) throws ServletException {
+    public List<Comment> getCommentsAnswers(String url, String id) throws ServletException, ParseException {
         Comment comment = campaignsService.getCampaign(url).getCommentById(id);
         List<Comment> answers = new ArrayList<>();
         for(int i = 0; i < comment.getAnswers().size(); i++){

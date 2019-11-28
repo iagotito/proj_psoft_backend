@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3d70e1d-bc64-48d4-994e-adf04de68dde" name="Default Changelist" comment="">
+    <list default="true" id="4c8c1b9b-d8d6-4425-9a94-7052b887db19" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CampaignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CommentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/controllers/CommentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/entities/Campaign.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CampaignsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/psoft/proj/backend/ajude/ProjPsoftBakckendApplicationTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/CommentsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/DonationsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/campaigns/services/DonationsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/psoft/proj/backend/ajude/users/services/UsersService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,14 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1U72vXp4iLPbVjXjdh6TQfCluyp" />
+  <component name="ProjectId" id="1UE3FRPYF0s8GSzzSKudN3eFcvK" />
   <component name="PropertiesComponent">
-    <property name="RequestMappingsPanelOrder0" value="0" />
-    <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -40,37 +40,46 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="ProjPsoftBakckendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="ProjPsoftBakckendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="psoft.proj.backend.ajude.ProjPsoftBakckendApplication" />
       <module name="proj_psoft_bakckend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="psoft.proj.backend.ajude.ProjPsoftBakckendApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="psoft.proj.backend.ajude.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ProjPsoftBakckendApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d3d70e1d-bc64-48d4-994e-adf04de68dde" name="Default Changelist" comment="" />
-      <created>1574693546594</created>
+      <changelist id="4c8c1b9b-d8d6-4425-9a94-7052b887db19" name="Default Changelist" comment="" />
+      <created>1574907822424</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1574693546594</updated>
-      <workItem from="1574693556881" duration="608000" />
+      <updated>1574907822424</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

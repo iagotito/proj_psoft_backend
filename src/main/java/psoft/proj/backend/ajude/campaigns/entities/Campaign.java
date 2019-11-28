@@ -57,7 +57,7 @@ public class Campaign {
         if (currentDate.compareTo(deadline) > 0)
             return;
 
-        if (donated >= goal)
+        if (this.donated >= this.goal && this.status.equals("meta atingida"))
             setStatus("concluída");
         else
             setStatus("vencida");

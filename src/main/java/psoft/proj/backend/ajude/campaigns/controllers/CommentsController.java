@@ -8,6 +8,7 @@ import psoft.proj.backend.ajude.campaigns.entities.Campaign;
 import psoft.proj.backend.ajude.campaigns.entities.Comment;
 import psoft.proj.backend.ajude.campaigns.services.CommentsService;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -79,7 +80,7 @@ public class CommentsController {
     public ResponseEntity<?> getCampaignComments (@PathVariable String url) {
         try {
             return new ResponseEntity<List<Comment>>(commentsService.getCampaignsComments(url), HttpStatus.OK);
-        } catch (ServletException e) {
+        } catch (ServletException | ParseException e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
@@ -90,7 +91,7 @@ public class CommentsController {
     public ResponseEntity<?> getCommentsAnswers (@PathVariable String url, @PathVariable String id) {
         try {
             return new ResponseEntity<List<Comment>>(commentsService.getCommentsAnswers(url, id), HttpStatus.OK);
-        } catch (ServletException e) {
+        } catch (ServletException | ParseException e) {
             return new ResponseEntity<ExceptionResponse>(new ExceptionResponse(e.getMessage()),
                     HttpStatus.NOT_FOUND);
         }
