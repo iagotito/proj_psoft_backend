@@ -1,5 +1,5 @@
 ## AJuDE - AquiJUntosDoandoEsperança
-####Descrição
+#### Descrição
 O AJuDE é uma plataforma para financiamento coletivo onde
 as causas mais populares ganham mais visibilidade. Os 
 projetos (ou campanhas) são atendidos quando conseguem 
